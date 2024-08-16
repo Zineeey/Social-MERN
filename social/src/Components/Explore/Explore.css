@@ -1,0 +1,73 @@
+.explore-container{
+    /* background: red; */
+    max-width: 1400px;
+    margin: 10px auto ;
+    padding: 20px
+}
+.explore-container h1{
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.users-card {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding: 16px;
+}
+
+.card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px;
+    min-width: 300px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    background-color: #fff;
+}
+
+.user-image {
+    display: block;
+    margin: 0 auto 16px;
+}
+
+.card-content h3 {
+    margin: 0;
+    font-size: 1.2em;
+    color: #333;
+}
+
+.card-content p {
+    margin: 4px 0;
+    color: #555;
+}
+
+.follow-button{
+    background-color: #1DA1F2;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 16px;
+    transition: background-color 0.3s;
+}
+
+.follow-button:hover{
+    background-color: #0F8BDA;
+}
+
+.unfollow-button{
+    background-color: #E0245E;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 16px;
+    transition: background-color 0.3s;
+}
+
+.unfollow-button:hover{
+    background-color: #C2185B;
+}

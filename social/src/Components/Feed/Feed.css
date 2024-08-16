@@ -1,0 +1,8 @@
+.feed-container {
+    display: grid;
+    max-width: 1400px;
+    grid-template-rows: 1fr 5fr;
+    gap: 16px; 
+    margin: auto;
+    height: 100vh;
+}
