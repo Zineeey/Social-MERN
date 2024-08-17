@@ -90,6 +90,7 @@ const removeConnection = async (req, res) => {
             return res.status(404).json({ error: 'User to remove not found' });
         }
         
+        
         // Remove from current user's connections if present
         if (currentUser.connections.includes(userToRemove._id)) {
             currentUser.connections = currentUser.connections.filter(id => id.toString() !== userToRemove._id.toString());
