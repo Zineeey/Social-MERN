@@ -8,8 +8,7 @@ import PreviewPost from './PreviewPost';
 import Modal from '../Modal/Modal';
 import UpdatePost from './UpdatePost';
 
-
-const { deletePost, likePost, unlikePost, commentPost} = require('../../Service/ApiService');
+const { deletePost, likePost, unlikePost, commentPost } = require('../../Service/ApiService');
 
 const Posts = ({ post }) => {
     const { user } = useAuthContext();
@@ -19,32 +18,30 @@ const Posts = ({ post }) => {
     const [isProcessingLike, setIsProcessingLike] = useState(false);
     const [localLikes, setLocalLikes] = useState(post.likes.length);
     const [isOwner, setIsOwner] = useState(false);
-    const [previewPost , setPreviewPost] = useState(false);
+    const [previewPost, setPreviewPost] = useState(false);
     const [content, setContent] = useState('');
     const [updatePost, setUpdatePost] = useState(false);
 
-
-    // Determine the icon based on the isLiked state
-    const likeIcon = isLiked ? Liked : Unlike;
-
     useEffect(() => {
         if (user) {
-            const userHasLiked = post.likes.map((like) => like.email).includes(user.email);
+            // this is checker if user has liked the post or not
+            const userHasLiked = post.likes.some((like) => like._id === user._id);
             setIsLiked(userHasLiked);
-            setIsOwner(post.user_id.email === user.email);
+
+            // This is for owner checking
+            setIsOwner(post.user_id._id === user._id);
         }
-    }, [post.likes, post.user_id.email, user]);
-    
-    const handleComment = async (e)  => {
+    }, [post, user]);
+
+    const handleComment = async (e) => {
         e.preventDefault();
-        const data = {content};
-        const response = await commentPost(post._id, data)
-        if(response.status === 200){
-            dispatch({type: 'UPDATE_POST', payload: response.data});
+        const data = { content };
+        const response = await commentPost(post._id, data);
+        if (response.status === 200) {
+            dispatch({ type: 'UPDATE_POST', payload: response.data });
         }
         setContent('');
-
-    }
+    };
 
     const handleToggleOptions = () => {
         setIsOptionsVisible(prev => !prev);
@@ -52,34 +49,28 @@ const Posts = ({ post }) => {
 
     const handleDeletePost = async () => {
         setIsOptionsVisible(false);
-
         const response = await deletePost(post._id);
         if (response.status === 200) {
             dispatch({ type: 'DELETE_POST', payload: post._id });
         }
-
     };
-
-
 
     const handleLike = async () => {
         if (isProcessingLike) return;
-    
+
         setIsProcessingLike(true);
-    
+
         try {
             const response = isLiked
                 ? await unlikePost(post._id)
                 : await likePost(post._id);
-    
+
             if (response.status === 200) {
                 const updatedPost = response.data;
                 dispatch({ type: 'UPDATE_POST', payload: updatedPost });
-    
-                // Toggle like status and update the local like count
+
                 setLocalLikes(prev => (isLiked ? prev - 1 : prev + 1));
                 setIsLiked(prev => !prev);
-                
             } else {
                 console.error('Failed to update like status');
             }
@@ -90,11 +81,9 @@ const Posts = ({ post }) => {
         }
     };
 
-
-
     const handlePreview = () => {
         setPreviewPost(true);
-    }
+    };
 
     const closePreview = () => {
         setPreviewPost(false);
@@ -104,14 +93,12 @@ const Posts = ({ post }) => {
         setIsOptionsVisible(false);
         setUpdatePost(true);
     };
-    
+
     const closeUpdate = () => {
         setUpdatePost(false);
-    }
-    
+    };
 
     return (
-        
         <div className="post-item">
             <div className="post-header">
                 <div className='post-header-left'>
@@ -147,7 +134,7 @@ const Posts = ({ post }) => {
             <div className="post-footer">
                 {localLikes}
                 <button onClick={handleLike} disabled={isProcessingLike}>
-                    <img src={likeIcon} className="like-icon" alt="Like" />
+                    <img src={isLiked ? Liked : Unlike} className="like-icon" alt="Like" />
                 </button>
                 <button onClick={handlePreview}>{post.comments.length} Comments</button>
             </div>

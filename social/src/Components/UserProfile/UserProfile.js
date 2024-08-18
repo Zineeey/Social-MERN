@@ -3,6 +3,7 @@ import './UserProfile.css';
 import { useAuthContext } from '../../Hooks/useAuthContext';
 import { getUserPosts, getUserProfile } from '../../Service/ApiService';
 import Posts from '../Posts/Posts';
+import CreatePost from '../Posts/CreatePost';
 
 const UserProfile = () => {
     const { user, profile, dispatch } = useAuthContext();
@@ -43,7 +44,7 @@ const UserProfile = () => {
                 try {
                     const response = await getUserPosts();
                     if (response.status === 200) {
-                        setPosts(response.data); // Set posts to state
+                        setPosts(response.data);
                     } else {
                         console.error('Failed to fetch posts');
                     }
@@ -53,11 +54,12 @@ const UserProfile = () => {
             }
         };
 
-        fetchUserPosts();
-        const intervalId = setInterval(fetchUserPosts, 1000); 
+        if(user){
+            fetchUserPosts();
+        }
+        // fetchUserPosts();
 
-        return () => clearInterval(intervalId); 
-    }, [user]);
+    }, [user, posts]);
 
     return (
         <>
@@ -97,10 +99,13 @@ const UserProfile = () => {
                                 </div>
 
                             </div>
+
+                            <CreatePost />
                             
                         </div>
 
                         <div className="profile-bottom-right">
+
                             <div className="posts">
                                 {posts.length > 0 ? (
                                     posts.map((post) => (

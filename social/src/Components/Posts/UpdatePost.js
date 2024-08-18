@@ -15,7 +15,7 @@ const UpdatePost = ({ post , onClose }) => {
         
         const response = await updatePost(post._id, data);
         if (response.status === 200) {
-            console.log("Post updated successfully");
+            // console.log("Post updated successfully");
             dispatch({ type: "UPDATE_POST", payload: response.data });
             onClose();
         } else {

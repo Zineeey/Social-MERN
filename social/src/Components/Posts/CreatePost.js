@@ -46,6 +46,7 @@ const CreatePost = () => {
                 alt="User profile"
             />
             <form className="create-post-form" onSubmit={handleSubmit}>
+            {error && <p className="error-message">{error}</p>}
                 <input
                     type="text"
                     placeholder="Title"
@@ -59,7 +60,7 @@ const CreatePost = () => {
                     value={content}
                     onChange={(e) => setContent(e.target.value)}
                 />
-                {error && <p className="error-message">{error}</p>}
+                
                 <button type="submit" className="submit-button">Post</button>
             </form>
         </div>

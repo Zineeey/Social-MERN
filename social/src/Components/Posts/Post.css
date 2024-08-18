@@ -16,6 +16,12 @@
     margin-right: 10px;
 }
 
+.error-message {
+    color: red;
+    
+    font-size: 14px;
+}
+
 .create-post-form {
     flex: 1;
     display: flex;

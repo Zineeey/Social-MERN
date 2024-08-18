@@ -12,6 +12,8 @@ export const authReducer = (state, action) => {
         case 'LOGOUT':
             return {
                 user: null,
+                posts: null,
+                profile: null,
             }
         case 'GET_PROFILE':
             return {
