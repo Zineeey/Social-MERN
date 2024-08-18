@@ -149,7 +149,7 @@ const Posts = ({ post }) => {
                     <form className="add-comment" onSubmit={handleComment}>
                         <input
                             type="text"
-                            placeholder="Comment ..."
+                            placeholder={`Comment as ${user.fullName}`}
                             value={content}
                             onChange={(e) => setContent(e.target.value)}
                         />
